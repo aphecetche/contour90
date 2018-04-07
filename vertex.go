@@ -7,11 +7,11 @@ type Vertex struct {
 	x, y float64
 }
 
-func isVertical(a, b Vertex) bool {
+func isVerticalSegment(a, b Vertex) bool {
 	return EqualFloat(a.x, b.x)
 }
 
-func isHorizontal(a, b Vertex) bool {
+func isHorizontalSegment(a, b Vertex) bool {
 	return EqualFloat(a.y, b.y)
 }
 

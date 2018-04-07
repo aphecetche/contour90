@@ -10,20 +10,20 @@ var (
 func TestVertical(t *testing.T) {
 	v1 := Vertex{12, 0}
 	v2 := Vertex{12, 20}
-	if !isVertical(v1, v2) {
+	if !isVerticalSegment(v1, v2) {
 		t.Error("segment v1-v2 should be vertical")
 	}
-	if isVertical(v1, p0) {
+	if isVerticalSegment(v1, p0) {
 		t.Error("segment v1-p0 should not be vertical")
 	}
 }
 func TestHorizontal(t *testing.T) {
 	v1 := Vertex{0, 12}
 	v2 := Vertex{20, 12}
-	if !isHorizontal(v1, v2) {
+	if !isHorizontalSegment(v1, v2) {
 		t.Error("segment v1-v2 should be horizontal")
 	}
-	if isHorizontal(v1, p0) {
+	if isHorizontalSegment(v1, p0) {
 		t.Error("segment v1-p0 should not be horizontal")
 	}
 }
