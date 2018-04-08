@@ -83,9 +83,9 @@ func (b bbox) String() string {
 		b.Xmin(), b.Ymin(), b.Xmax(), b.Ymax())
 }
 
-// EqualBox checks if two boxes are equal.
+// EqualBBox checks if two boxes are equal.
 // For the precision of the comparison see EqualFloat function.
-func EqualBox(a, b BBox) bool {
+func EqualBBox(a, b BBox) bool {
 	return EqualFloat(a.Xmin(), b.Xmin()) &&
 		EqualFloat(a.Xmax(), b.Xmax()) &&
 		EqualFloat(a.Ymin(), b.Ymin()) &&

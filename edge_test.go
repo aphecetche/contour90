@@ -2,7 +2,7 @@ package contour90
 
 import "testing"
 
-var dummy float64 = 0
+var dummy float64
 
 func TestVerticalLeftEdgeIsTopToBottom(t *testing.T) {
 	edge := verticalEdge{dummy, 12, 1}

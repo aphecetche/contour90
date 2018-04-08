@@ -61,7 +61,7 @@ func TestBBoxIntersect(t *testing.T) {
 	two, _ := NewBBox(2, -1, 5, 1)
 	expected, _ := NewBBox(2, 0, 4, 1)
 	inter, _ := Intersect(one, two)
-	if !EqualBox(inter, expected) {
+	if !EqualBBox(inter, expected) {
 		t.Errorf("Intersect not as expected : %s", inter.String())
 		log.Println("expected", expected)
 		log.Println("inter", inter)
