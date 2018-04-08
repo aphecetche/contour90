@@ -1,6 +1,10 @@
 package contour90
 
-import "fmt"
+import (
+	"fmt"
+	"log"
+	"math"
+)
 
 // Vertex is a simple (x,y) float64 pair
 type Vertex struct {
@@ -58,4 +62,23 @@ func SquaredDistanceOfPointToSegment(p, p0, p1 Vertex) float64 {
 	b := c1 / c2
 	pbase := Vertex{p0.x + b*v.x, p0.y + b*v.y}
 	return squaredDistance(p, pbase)
+}
+
+func getVerticesBBox(vertices []Vertex) BBox {
+	xmin := math.MaxFloat64
+	xmax := -xmin
+	ymin := xmin
+	ymax := -ymin
+
+	for _, v := range vertices {
+		xmin = math.Min(xmin, v.x)
+		ymin = math.Min(ymin, v.y)
+		xmax = math.Max(xmax, v.x)
+		ymax = math.Max(ymax, v.y)
+	}
+	bbox, err := NewBBox(xmin, ymin, xmax, ymax)
+	if err != nil {
+		log.Fatal("got a very unexpected invalid bbox here")
+	}
+	return bbox
 }

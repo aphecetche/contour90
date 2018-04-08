@@ -6,3 +6,8 @@ import "math"
 func EqualFloat(a, b float64) bool {
 	return (math.Abs(a-b) < 1E-4)
 }
+
+// IsStrictlyBelowFloat returns true if a < b
+func IsStrictlyBelowFloat(a, b float64) bool {
+	return (a < b) && !EqualFloat(a, b)
+}

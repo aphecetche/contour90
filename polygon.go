@@ -3,7 +3,6 @@ package contour90
 import (
 	"errors"
 	"fmt"
-	"log"
 	"math"
 	"sort"
 )
@@ -90,7 +89,7 @@ func (p *Polygon) String() string {
 	return s
 }
 
-func (p *Polygon) getSortedVertices() []Vertex {
+func (p *Polygon) getVertices() []Vertex {
 	size := len(*p)
 	if p.isClosed() {
 		size--
@@ -99,6 +98,11 @@ func (p *Polygon) getSortedVertices() []Vertex {
 	for i := 0; i < size; i++ {
 		c = append(c, (*p)[i])
 	}
+	return c
+}
+
+func sortVertices(vertices []Vertex) []Vertex {
+	c := append([]Vertex{}, vertices...)
 	sort.Slice(c, func(i, j int) bool {
 		if EqualFloat(c[i].x, c[j].x) {
 			return c[i].y < c[j].y
@@ -106,6 +110,10 @@ func (p *Polygon) getSortedVertices() []Vertex {
 		return c[i].x < c[j].x
 	})
 	return c
+}
+
+func (p *Polygon) getSortedVertices() []Vertex {
+	return sortVertices(p.getVertices())
 }
 
 // Contains returns true if the point (xp,yp) is inside the polygon
@@ -138,22 +146,7 @@ func (p *Polygon) Contains(xp, yp float64) (bool, error) {
 
 // BBox returns the bounding box of the polygon.
 func (p *Polygon) BBox() BBox {
-	xmin := math.MaxFloat64
-	xmax := -xmin
-	ymin := xmin
-	ymax := -ymin
-
-	for _, v := range *p {
-		xmin = math.Min(xmin, v.x)
-		ymin = math.Min(ymin, v.y)
-		xmax = math.Max(xmax, v.x)
-		ymax = math.Max(ymax, v.y)
-	}
-	bbox, err := NewBBox(xmin, ymin, xmax, ymax)
-	if err != nil {
-		log.Fatal("got a very unexpected invalid bbox here")
-	}
-	return bbox
+	return getVerticesBBox(p.getVertices())
 }
 
 // SquaredDistancePointToPolygon return the square of the distance
@@ -167,4 +160,13 @@ func SquaredDistancePointToPolygon(point Vertex, p Polygon) float64 {
 		d = math.Min(d, d2)
 	}
 	return d
+}
+
+func areCounterClockwisePolygons(polygons []Polygon) bool {
+	for _, p := range polygons {
+		if !p.isCounterClockwiseOriented() {
+			return false
+		}
+	}
+	return true
 }
