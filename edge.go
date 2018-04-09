@@ -1,6 +1,9 @@
 package contour90
 
-import "math"
+import (
+	"fmt"
+	"math"
+)
 
 type manhattanEdge interface {
 	begin() Vertex
@@ -69,4 +72,31 @@ func left(h horizontalEdge) float64 {
 
 func right(h horizontalEdge) float64 {
 	return math.Max(h.begin().x, h.end().x)
+}
+
+func (h horizontalEdge) String() string {
+	s := fmt.Sprintf("[%v,%v]", h.begin(), h.end())
+	if isLeftToRight(h) {
+		s += "->-"
+	} else {
+		s += "-<-"
+	}
+	return s
+}
+
+func (v verticalEdge) String() string {
+	s := fmt.Sprintf("[%v,%v]", v.begin(), v.end())
+	if isTopToBottom(v) {
+		s += "v"
+	} else {
+		s += "^"
+	}
+	return s
+
+}
+
+// EqualEdge returns true if edges a and b are equal
+func EqualEdge(a, b manhattanEdge) bool {
+	return EqualVertex(a.begin(), b.begin()) &&
+		EqualVertex(a.end(), b.end())
 }

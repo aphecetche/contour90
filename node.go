@@ -127,6 +127,31 @@ func (n *node) goRight(ival interval) bool {
 	return IsStrictlyBelowFloat(n.midpoint, ival.end())
 }
 
+/// Contribution of an edge (b,e) to the final contour
+func (n *node) contribution(ival interval, edgeStack *[]interval) {
+	if n.cardinality != 0 {
+		return
+	}
+	if n.interval.isFullyContainedIn(ival) && n.potent == false {
+		if len(*edgeStack) == 0 {
+			*edgeStack = append(*edgeStack, n.interval)
+		} else {
+			back := &((*edgeStack)[len(*edgeStack)-1])
+			if !back.extend(n.interval) {
+				// add a new segment if it can not be merged with current one
+				*edgeStack = append(*edgeStack, n.interval)
+			}
+		}
+	} else {
+		if n.goLeft(ival) {
+			n.leftChild.contribution(ival, edgeStack)
+		}
+		if n.goRight(ival) {
+			n.rightChild.contribution(ival, edgeStack)
+		}
+	}
+}
+
 func (n *node) insertInterval(ival interval) {
 	if n.interval.isFullyContainedIn(ival) {
 		n.cardinality++

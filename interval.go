@@ -36,7 +36,7 @@ func (i *interval) isFullyContainedIn(j interval) bool {
 
 func (i *interval) extend(j interval) bool {
 	if EqualFloat(j.begin(), i.end()) {
-		(*i).e = j.end()
+		i.e = j.end()
 		return true
 	}
 	return false

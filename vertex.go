@@ -20,7 +20,7 @@ func isHorizontalSegment(a, b Vertex) bool {
 }
 
 func (v Vertex) String() string {
-	return fmt.Sprintf("( %f %f )", v.x, v.y)
+	return fmt.Sprintf("( %v %v )", v.x, v.y)
 }
 
 func sub(a, b Vertex) Vertex {

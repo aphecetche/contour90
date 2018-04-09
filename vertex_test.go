@@ -58,7 +58,7 @@ func TestDistancePointToSegmentWhereBasePointIsRightOfSegment(t *testing.T) {
 func TestVertexString(t *testing.T) {
 	a := Vertex{12.34, -56.789}
 	s := a.String()
-	expected := "( 12.340000 -56.789000 )"
+	expected := "( 12.34 -56.789 )"
 	if s != expected {
 		t.Errorf("expected string:%s and got:%s", expected, s)
 	}
